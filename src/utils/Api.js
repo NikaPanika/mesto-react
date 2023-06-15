@@ -26,7 +26,7 @@ class Api {
             .then(this._checkResponse);
     }
 
-    editProfile(data) {
+    setUserInfo(data) {
         return fetch(`https://mesto.${this._commonUrl}/users/me`, {
             method: 'PATCH',
             headers: this._headers,
@@ -60,6 +60,13 @@ class Api {
             .then(this._checkResponse);
     }
 
+    changeLikeCardStatus(id, isLiked) {
+        return fetch(`https://mesto.${this._commonUrl}/cards/${id}/likes`, {
+            method: !isLiked ? "DELETE" : "PUT",
+            headers: this._headers,
+        }).then( this._checkResponse);
+    }
+
     deleteCard(id) {
         return fetch(`https://mesto.${this._commonUrl}/cards/${id}`, {
             method: 'DELETE',
@@ -72,7 +79,7 @@ class Api {
         return fetch(`https://mesto.${this._commonUrl}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._headers,
-            body: JSON.stringify({ avatar: data.link })
+            body: JSON.stringify( data )
         })
             .then(this._checkResponse);
     }
