@@ -1,10 +1,10 @@
-import React from 'react';
+import {useEffect, useState} from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
-    const [place, setPlace] = React.useState("");
-    const [link, setLink] = React.useState("");
+    const [place, setPlace] = useState("");
+    const [link, setLink] = useState("");
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -24,6 +24,11 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
         setLink(e.target.value);
     }
 
+   useEffect(() => {
+        setPlace("");
+        setLink("");
+    }, [isOpen]);
+
     return (
         <PopupWithForm
             title={"Новое место"}
@@ -39,14 +44,16 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
                 minLength='2'
                 maxLength='30'
                 id="place-input"
-                onChange={handleChangePlace} />
+                onChange={handleChangePlace} 
+                value={place}/>
             <span className="popup__input-error place-input-error"></span>
             <input type="url"
                 className="popup__input popup__input_type_link"
                 name="link"
                 placeholder="Ссылка на картинку"
                 required id="link-input"
-                onChange={handleChangeLink} />
+                onChange={handleChangeLink}
+                value={link} />
             <span className="popup__input-error link-input-error"></span>
         </PopupWithForm>)
 }
